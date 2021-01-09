@@ -24,14 +24,11 @@ for filas in cur:
 print('Loaded days: ',len(dates))
 
 fhand = open('gline.js','w')
-fhand.write("gline = [ ['Date', 'New Cases','New Deaths']")
+fhand.write("gline = [ ['Date', 'New Cases']")
 
 for i in range(len(dates)):
     fhand.write(",\n['"+dates[i]+"'")
     fhand.write(","+str(news.get(dates[i])[0]))
-    print((total.get(dates[i])))
-
-    fhand.write(","+str(news.get(dates[i])[1]))
     fhand.write("]")
 
 fhand.write("\n];\n")
