@@ -23,8 +23,8 @@ cur.execute('''CREATE TABLE IF NOT EXISTS dias
     UNIQUE(location, fecha))''')
 
 with open('data\owid-covid-data.csv', newline='') as csvfile:
-    lector = csv.reader(csvfile, delimiter=',')
     while True:
+        lector = csv.reader(csvfile, delimiter=',')
         print('Enter the name of the country that you want to get data: ')
         location = input()
         print('Searching data of: '+location)
@@ -37,9 +37,9 @@ with open('data\owid-covid-data.csv', newline='') as csvfile:
             for row in lector:
                 if row[2] == location:
                     if desdeCero:
-                        if row[4] == "":
+                        if not row[4]:
                             row[4] = 0
-                        if row[5] == "":
+                        if not row[5]:
                             row[5] = 0
                         if not row[7]:
                             row[7] = 0
