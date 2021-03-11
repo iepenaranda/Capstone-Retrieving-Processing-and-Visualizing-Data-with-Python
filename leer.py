@@ -1,19 +1,7 @@
 import csv
 import sqlite3
 from datetime import datetime
-
-
-# Esta función busca la última fecha registrada en la BD y la guarda
-# Esto permite después al algoritmo reconocer desde donde empezar a carga la información
-def lastDate(cur,location):
-    try:
-        last_date = cur.execute('SELECT fecha FROM dias WHERE location=? ORDER BY fecha DESC',(location,)).fetchone()
-        if last_date is None:
-            return None
-        else:
-            return last_date[0]
-    except Error:
-        return Error
+import checkDB
 
 #https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv
 
@@ -35,7 +23,7 @@ with open('Data\owid-covid-data.csv', newline='') as csvfile:
         location = input()
         print('Searching data of: '+location)
         try:
-            last_date = lastDate(cur,location)
+            last_date = checkDB.lastDate(cur,location)
             if last_date is None:
                 desdeCero = True
             else:
