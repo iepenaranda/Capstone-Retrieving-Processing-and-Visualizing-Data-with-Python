@@ -2,6 +2,9 @@ import csv
 import sqlite3
 from datetime import datetime
 
+
+# Esta función busca la última fecha registrada en la BD y la guarda
+# Esto permite después al algoritmo reconocer desde donde empezar a carga la información
 def lastDate(cur,location):
     try:
         last_date = cur.execute('SELECT fecha FROM dias WHERE location=? ORDER BY fecha DESC',(location,)).fetchone()
@@ -14,6 +17,7 @@ def lastDate(cur,location):
 
 #https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv
 
+# Crea la BD donde se guardaran los datosen caso de que no exista.
 con = sqlite3.connect('covid.sqlite')
 cur = con.cursor()
 cur.execute('''CREATE TABLE IF NOT EXISTS dias
@@ -22,7 +26,9 @@ cur.execute('''CREATE TABLE IF NOT EXISTS dias
     total_deaths INTEGER, new_deaths INTEGER, total_tests INTEGER, new_tests INTEGER,
     UNIQUE(location, fecha))''')
 
-with open('data\owid-covid-data.csv', newline='') as csvfile:
+# Lee el archivo .csv que hay en la carpeta Data y extrae los datos según sea solicitado
+# Solicita el país del cuál se desea la información, por lo tanto es necesario escribirlo bien.
+with open('Data\owid-covid-data.csv', newline='') as csvfile:
     while True:
         lector = csv.reader(csvfile, delimiter=',')
         print('Enter the name of the country that you want to get data: ')

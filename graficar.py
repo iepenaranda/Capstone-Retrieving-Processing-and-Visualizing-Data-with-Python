@@ -5,7 +5,7 @@ import zlib
 conn = sqlite3.connect('covid.sqlite')
 cur = conn.cursor()
 
-cur.execute('SELECT location, fecha, new_cases, new_deaths FROM dias')
+cur.execute('SELECT location, date, new_cases, new_deaths FROM dias')
 daily = dict()
 dates = list()
 countries = dict()
